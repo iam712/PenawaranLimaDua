@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Penawaran Barang</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      input[type="text"],
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button.remove {
+        background-color: #dc3545;
+      }
+      button.clear {
+        background-color: #007bff;
+      }
+      .total-section {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Form Penawaran Barang</h2>
+
+    <form id="penawaran-form">
+      <label for="tanggal-faktur">Tanggal Faktur:</label>
+      <input
+        type="date"
+        id="tanggal-faktur"
+        name="tanggal-faktur"
+      /><br /><br />
+
+      <label for="tanggal-jatuh-tempo">Tanggal Jatuh Tempo:</label>
+      <input
+        type="date"
+        id="tanggal-jatuh-tempo"
+        name="tanggal-jatuh-tempo"
+      /><br /><br />
+
+      <table id="items-table">
+        <thead>
+          <tr>
+            <th>Deskripsi</th>
+            <th>Harga (Rp)</th>
+            <th>Kuantitas</th>
+            <th>Jumlah (Rp)</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                type="text"
+                name="deskripsi[]"
+                placeholder="Deskripsi barang"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                name="harga[]"
+                placeholder="Harga barang"
+                oninput="calculateTotal(this)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                name="kuantitas[]"
+                placeholder="Kuantitas"
+                oninput="calculateTotal(this)"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                name="jumlah[]"
+                placeholder="Jumlah"
+                readonly
+              />
+            </td>
+            <td>
+              <button type="button" class="remove" onclick="removeRow(this)">
+                Hapus
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" onclick="addRow()">Tambah Barang</button
+      ><br /><br />
+
+      <div class="total-section">
+        <label for="subtotal">Subtotal (Rp):</label>
+        <input type="text" id="subtotal" readonly /><br /><br />
+
+        <label for="pajak">Pajak (10%) (Rp):</label>
+        <input type="text" id="pajak" readonly /><br /><br />
+
+        <label for="total">Total (Rp):</label>
+        <input type="text" id="total" readonly /><br /><br />
+      </div>
+
+      <label for="cara-pembayaran">Cara Pembayaran:</label>
+      <select id="cara-pembayaran" name="cara-pembayaran">
+        <option value="cash">Cash</option>
+        <option value="kartu-kredit">Kartu Kredit</option>
+        <option value="cicilan">Cicilan</option></select
+      ><br /><br />
+
+      <button type="button" onclick="previewPenawaran()">
+        Preview Penawaran
+      </button>
+      <button type="button" onclick="downloadPDF()">Download PDF</button>
+      <button type="button" class="clear" onclick="clearForm()">
+        Hapus Isi Form
+      </button>
+    </form>
+
+    <!-- Tempat Preview Penawaran -->
+    <div id="preview-penawaran" style="display: none; margin-top: 20px">
+      <h3>Preview Penawaran Barang</h3>
+      <div id="penawaran-preview-content"></div>
+    </div>
+
+    <!-- Tambahkan pustaka html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <script>
+      function addRow() {
+        var table = document
+          .getElementById("items-table")
+          .getElementsByTagName("tbody")[0];
+        var newRow = table.insertRow();
+
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+        var cell5 = newRow.insertCell(4);
+
+        cell1.innerHTML =
+          '<input type="text" name="deskripsi[]" placeholder="Deskripsi barang">';
+        cell2.innerHTML =
+          '<input type="number" name="harga[]" placeholder="Harga barang" oninput="calculateTotal(this)">';
+        cell3.innerHTML =
+          '<input type="number" name="kuantitas[]" placeholder="Kuantitas" oninput="calculateTotal(this)">';
+        cell4.innerHTML =
+          '<input type="text" name="jumlah[]" placeholder="Jumlah" readonly>';
+        cell5.innerHTML =
+          '<button type="button" class="remove" onclick="removeRow(this)">Hapus</button>';
+      }
+
+      function removeRow(button) {
+        var row = button.parentElement.parentElement;
+        row.parentElement.removeChild(row);
+        calculateGrandTotal();
+      }
+
+      function calculateTotal(element) {
+        var row = element.parentElement.parentElement;
+        var harga = row.querySelector('input[name="harga[]"]').value;
+        var kuantitas = row.querySelector('input[name="kuantitas[]"]').value;
+        var jumlah = row.querySelector('input[name="jumlah[]"]');
+
+        if (harga && kuantitas) {
+          jumlah.value = harga * kuantitas;
+        } else {
+          jumlah.value = 0;
+        }
+
+        calculateGrandTotal();
+      }
+
+      function calculateGrandTotal() {
+        var rows = document.querySelectorAll("#items-table tbody tr");
+        var subtotal = 0;
+
+        rows.forEach(function (row) {
+          var jumlah = row.querySelector('input[name="jumlah[]"]').value;
+          subtotal += parseFloat(jumlah) || 0;
+        });
+
+        var pajak = subtotal * 0.1; // Pajak 10%
+        var total = subtotal + pajak;
+
+        document.getElementById("subtotal").value = subtotal.toFixed(2);
+        document.getElementById("pajak").value = pajak.toFixed(2);
+        document.getElementById("total").value = total.toFixed(2);
+      }
+
+      function previewPenawaran() {
+        // Ambil nilai dari form
+        var tanggalFaktur = document.getElementById("tanggal-faktur").value;
+        var tanggalJatuhTempo = document.getElementById(
+          "tanggal-jatuh-tempo"
+        ).value;
+        var subtotal = document.getElementById("subtotal").value;
+        var pajak = document.getElementById("pajak").value;
+        var total = document.getElementById("total").value;
+        var caraPembayaran = document.getElementById("cara-pembayaran").value;
+
+        var items = document.querySelectorAll("#items-table tbody tr");
+        var itemHTML =
+          '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>Deskripsi</th><th>Harga (Rp)</th><th>Kuantitas</th><th>Jumlah (Rp)</th></tr>';
+
+        items.forEach(function (row) {
+          var deskripsi = row.querySelector('input[name="deskripsi[]"]').value;
+          var harga = row.querySelector('input[name="harga[]"]').value;
+          var kuantitas = row.querySelector('input[name="kuantitas[]"]').value;
+          var jumlah = row.querySelector('input[name="jumlah[]"]').value;
+
+          itemHTML += `<tr><td>${deskripsi}</td><td>Rp${harga}</td><td>${kuantitas}</td><td>Rp${jumlah}</td></tr>`;
+        });
+
+        itemHTML += "</table>";
+
+        // Update konten preview
+        var previewContent = `
+            <p>Tanggal Faktur: ${tanggalFaktur}</p>
+            <p>Tanggal Jatuh Tempo: ${tanggalJatuhTempo}</p>
+            <hr>
+            ${itemHTML}
+            <hr>
+            <p>Subtotal: Rp${subtotal}</p>
+            <p>Pajak: Rp${pajak}</p>
+            <p>Total: Rp${total}</p>
+            <p>Cara Pembayaran: ${caraPembayaran}</p>
+        `;
+        document.getElementById("penawaran-preview-content").innerHTML =
+          previewContent;
+        document.getElementById("preview-penawaran").style.display = "block";
+      }
+
+      function downloadPDF() {
+        var element = document.getElementById("preview-penawaran");
+        html2pdf().from(element).save("penawaran-barang.pdf");
+      }
+
+      function clearForm() {
+        // Menghapus semua isi input form
+        document.getElementById("penawaran-form").reset();
+
+        // Reset tabel barang
+        var tableBody = document.querySelector("#items-table tbody");
+        tableBody.innerHTML = `<tr>
+                <td><input type="text" name="deskripsi[]" placeholder="Deskripsi barang"></td>
+                <td><input type="number" name="harga[]" placeholder="Harga barang" oninput="calculateTotal(this)"></td>
+                <td><input type="number" name="kuantitas[]" placeholder="Kuantitas" oninput="calculateTotal(this)"></td>
+                <td><input type="text" name="jumlah[]" placeholder="Jumlah" readonly></td>
+                <td><button type="button" class="remove" onclick="removeRow(this)">Hapus</button></td>
+            </tr>`;
+
+        // Sembunyikan preview
+        document.getElementById("preview-penawaran").style.display = "none";
+
+        // Reset total
+        document.getElementById("subtotal").value = "";
+        document.getElementById("pajak").value = "";
+        document.getElementById("total").value = "";
+      }
+    </script>
+  </body>
+</html>
