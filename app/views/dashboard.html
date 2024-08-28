@@ -47,6 +47,47 @@
       .total-section {
         text-align: right;
       }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        padding-top: 60px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        position: relative;
+      }
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .download-icon {
+        font-size: 24px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -140,19 +181,24 @@
         <option value="cicilan">Cicilan</option></select
       ><br /><br />
 
-      <button type="button" onclick="previewPenawaran()">
-        Preview Penawaran
-      </button>
+      <button type="button" onclick="openPreview()">Preview Penawaran</button>
       <button type="button" onclick="downloadPDF()">Download PDF</button>
       <button type="button" class="clear" onclick="clearForm()">
         Hapus Isi Form
       </button>
     </form>
 
-    <!-- Tempat Preview Penawaran -->
-    <div id="preview-penawaran" style="display: none; margin-top: 20px">
-      <h3>Preview Penawaran Barang</h3>
-      <div id="penawaran-preview-content"></div>
+    <!-- Modal untuk Preview -->
+    <div id="previewModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closePreview()">&times;</span>
+        <h3>Preview Penawaran Barang</h3>
+        <div id="penawaran-preview-content"></div>
+        <br />
+        <button type="button" onclick="downloadPDF()">
+          <i class="download-icon">💾 Download PDF</i>
+        </button>
+      </div>
     </div>
 
     <!-- Tambahkan pustaka html2pdf -->
@@ -221,6 +267,17 @@
         document.getElementById("total").value = total.toFixed(2);
       }
 
+      function openPreview() {
+        // Tampilkan modal
+        document.getElementById("previewModal").style.display = "block";
+        previewPenawaran();
+      }
+
+      function closePreview() {
+        // Sembunyikan modal
+        document.getElementById("previewModal").style.display = "none";
+      }
+
       function previewPenawaran() {
         // Ambil nilai dari form
         var tanggalFaktur = document.getElementById("tanggal-faktur").value;
@@ -261,11 +318,10 @@
         `;
         document.getElementById("penawaran-preview-content").innerHTML =
           previewContent;
-        document.getElementById("preview-penawaran").style.display = "block";
       }
 
       function downloadPDF() {
-        var element = document.getElementById("preview-penawaran");
+        var element = document.getElementById("penawaran-preview-content");
         html2pdf().from(element).save("penawaran-barang.pdf");
       }
 
@@ -291,6 +347,14 @@
         document.getElementById("pajak").value = "";
         document.getElementById("total").value = "";
       }
+
+      // Close modal jika klik di luar modal
+      window.onclick = function (event) {
+        var modal = document.getElementById("previewModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
     </script>
   </body>
 </html>
