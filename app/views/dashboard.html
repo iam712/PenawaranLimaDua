@@ -196,43 +196,68 @@
       <table id="items-table">
         <thead>
           <tr>
-            <th>Deskripsi</th>
-            <th>Harga (Rp)</th>
-            <th>Kuantitas</th>
-            <th>Jumlah (Rp)</th>
+            <th>No.</th>
+            <th>Item</th>
+            <th>Qty</th>
+            <th colspan="2">Ukuran (CM)</th>
+            <th>Harga Satuan (Rp.)</th>
+            <th>Total Harga (Rp.)</th>
             <th>Aksi</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>P</th>
+            <th>L</th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>
-              <input
-                type="text"
-                name="deskripsi[]"
-                placeholder="Deskripsi barang"
-              />
+              <input type="text" name="item[]" placeholder="Nama barang" />
             </td>
             <td>
               <input
                 type="number"
-                name="harga[]"
-                placeholder="Harga barang"
-                oninput="calculateTotal(this)"
-              />
-            </td>
-            <td>
-              <input
-                type="number"
-                name="kuantitas[]"
+                name="qty[]"
                 placeholder="Kuantitas"
                 oninput="calculateTotal(this)"
               />
             </td>
             <td>
               <input
+                type="number"
+                name="ukuran_p[]"
+                placeholder="Panjang"
+                oninput="calculateTotal(this)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                name="ukuran_l[]"
+                placeholder="Lebar"
+                oninput="calculateTotal(this)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                name="harga_satuan[]"
+                placeholder="Harga Satuan"
+                oninput="calculateTotal(this)"
+              />
+            </td>
+            <td>
+              <input
                 type="text"
-                name="jumlah[]"
-                placeholder="Jumlah"
+                name="total_harga[]"
+                placeholder="Total Harga"
                 readonly
               />
             </td>
@@ -248,22 +273,9 @@
       <button type="button" onclick="addRow()">Tambah Barang</button><br />
 
       <div class="total-section">
-        <label for="subtotal">Subtotal (Rp):</label>
-        <input type="text" id="subtotal" readonly /><br />
-
-        <label for="pajak">Pajak (10%) (Rp):</label>
-        <input type="text" id="pajak" readonly /><br />
-
-        <label for="total">Total (Rp):</label>
-        <input type="text" id="total" readonly /><br />
+        <label for="grand_total">Grand Total (Rp):</label>
+        <input type="text" id="grand_total" readonly /><br />
       </div>
-
-      <label for="cara-pembayaran">Cara Pembayaran:</label>
-      <select id="cara-pembayaran" name="cara-pembayaran">
-        <option value="cash">Cash</option>
-        <option value="kartu-kredit">Kartu Kredit</option>
-        <option value="cicilan">Cicilan</option></select
-      ><br />
 
       <button type="button" onclick="openPreview()">Preview Penawaran</button>
       <button type="button" onclick="downloadPDF()">Download PDF</button>
@@ -293,6 +305,7 @@
         var table = document
           .getElementById("items-table")
           .getElementsByTagName("tbody")[0];
+        var rowCount = table.rows.length;
         var newRow = table.insertRow();
 
         var cell1 = newRow.insertCell(0);
@@ -300,16 +313,24 @@
         var cell3 = newRow.insertCell(2);
         var cell4 = newRow.insertCell(3);
         var cell5 = newRow.insertCell(4);
+        var cell6 = newRow.insertCell(5);
+        var cell7 = newRow.insertCell(6);
+        var cell8 = newRow.insertCell(7);
 
-        cell1.innerHTML =
-          '<input type="text" name="deskripsi[]" placeholder="Deskripsi barang">';
+        cell1.innerHTML = rowCount + 1;
         cell2.innerHTML =
-          '<input type="number" name="harga[]" placeholder="Harga barang" oninput="calculateTotal(this)">';
+          '<input type="text" name="item[]" placeholder="Nama barang">';
         cell3.innerHTML =
-          '<input type="number" name="kuantitas[]" placeholder="Kuantitas" oninput="calculateTotal(this)">';
+          '<input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)">';
         cell4.innerHTML =
-          '<input type="text" name="jumlah[]" placeholder="Jumlah" readonly>';
+          '<input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)">';
         cell5.innerHTML =
+          '<input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)">';
+        cell6.innerHTML =
+          '<input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)">';
+        cell7.innerHTML =
+          '<input type="text" name="total_harga[]" placeholder="Total Harga" readonly>';
+        cell8.innerHTML =
           '<button type="button" class="remove" onclick="removeRow(this)">Hapus</button>';
       }
 
@@ -321,18 +342,22 @@
 
       function calculateTotal(element) {
         var row = element.parentElement.parentElement;
-        var harga = row.querySelector('input[name="harga[]"]').value;
-        var kuantitas = row.querySelector('input[name="kuantitas[]"]').value;
-        var jumlah = row.querySelector('input[name="jumlah[]"]');
+        var qty = row.querySelector('input[name="qty[]"]').value;
+        var panjang = row.querySelector('input[name="ukuran_p[]"]').value;
+        var lebar = row.querySelector('input[name="ukuran_l[]"]').value;
+        var hargaSatuan = row.querySelector(
+          'input[name="harga_satuan[]"]'
+        ).value;
+        var totalHarga = row.querySelector('input[name="total_harga[]"]');
 
-        if (harga && kuantitas) {
-          var totalAmount = harga * kuantitas;
-          jumlah.value = totalAmount.toLocaleString("id-ID", {
+        if (qty && panjang && lebar && hargaSatuan) {
+          var totalAmount = qty * panjang * lebar * hargaSatuan;
+          totalHarga.value = totalAmount.toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR",
           });
         } else {
-          jumlah.value = "Rp0";
+          totalHarga.value = "Rp0";
         }
 
         calculateGrandTotal();
@@ -340,102 +365,101 @@
 
       function calculateGrandTotal() {
         var rows = document.querySelectorAll("#items-table tbody tr");
-        var subtotal = 0;
+        var grandTotal = 0;
 
         rows.forEach(function (row) {
-          var jumlah = row
-            .querySelector('input[name="jumlah[]"]')
+          var totalHarga = row
+            .querySelector('input[name="total_harga[]"]')
             .value.replace(/[^0-9,-]+/g, "");
-          subtotal += parseFloat(jumlah) || 0;
+          grandTotal += parseFloat(totalHarga) || 0;
         });
 
-        var pajak = subtotal * 0.1; // Pajak 10%
-        var total = subtotal + pajak;
-
-        document.getElementById("subtotal").value = subtotal.toLocaleString(
-          "id-ID",
-          { style: "currency", currency: "IDR" }
-        );
-        document.getElementById("pajak").value = pajak.toLocaleString("id-ID", {
-          style: "currency",
-          currency: "IDR",
-        });
-        document.getElementById("total").value = total.toLocaleString("id-ID", {
-          style: "currency",
-          currency: "IDR",
-        });
+        document.getElementById("grand_total").value =
+          grandTotal.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          });
       }
 
       function openPreview() {
-        // Tampilkan modal
         document.getElementById("previewModal").style.display = "block";
         previewPenawaran();
       }
 
       function closePreview() {
-        // Sembunyikan modal
         document.getElementById("previewModal").style.display = "none";
       }
 
       function previewPenawaran() {
-        // Ambil nilai dari form
+        // Code to generate and display the preview of the offer form
         var kopSurat = document.getElementById("kop-surat").files[0];
         var tanggalFaktur = document.getElementById("tanggal-faktur").value;
         var nomorPenawaran = document.getElementById("nomor-penawaran").value;
         var perihal = document.getElementById("perihal").value;
         var namaPenerima = document.getElementById("nama-penerima").value;
-        var subtotal = document.getElementById("subtotal").value;
-        var pajak = document.getElementById("pajak").value;
-        var total = document.getElementById("total").value;
-        var caraPembayaran = document.getElementById("cara-pembayaran").value;
+        var grandTotal = document.getElementById("grand_total").value;
 
-        // Preview kop surat
         var reader = new FileReader();
         reader.onload = function (e) {
           var kopSuratHTML = kopSurat
-            ? `<img src="${e.target.result}" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />`
+            ? '<img src="' +
+              e.target.result +
+              '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
             : "";
 
-          // Update konten preview
-          var previewContent = `
-          ${kopSuratHTML}
-          <hr>
-          <p>Tanggal: ${tanggalFaktur}</p>
-          <p>Nomor Penawaran: ${nomorPenawaran}</p>
-          <p>Perihal: ${perihal}</p>
-          <p>Kepada Yth,</p>
-          <p>${namaPenerima}</p>
-          <p>Di Tempat</p>
-          <hr>
-          ${generateItemsTable()}
-          <hr>
-          <p>Subtotal: ${subtotal}</p>
-          <p>Pajak: ${pajak}</p>
-          <p>Total: ${total}</p>
-          <p>Cara Pembayaran: ${caraPembayaran}</p>
-        `;
+          var previewContent =
+            kopSuratHTML +
+            "<hr>" +
+            "<p>Tanggal: " +
+            tanggalFaktur +
+            "</p>" +
+            "<p>Nomor Penawaran: " +
+            nomorPenawaran +
+            "</p>" +
+            "<p>Perihal: " +
+            perihal +
+            "</p>" +
+            "<p>Kepada Yth,</p>" +
+            "<p>" +
+            namaPenerima +
+            "</p>" +
+            "<p>Di Tempat</p>" +
+            "<hr>" +
+            generateItemsTable() +
+            "<hr>" +
+            "<p>Grand Total: " +
+            grandTotal +
+            "</p>";
+
           document.getElementById("penawaran-preview-content").innerHTML =
             previewContent;
         };
         if (kopSurat) {
           reader.readAsDataURL(kopSurat);
         } else {
-          previewContent = `
-          <hr>
-          <p>Tanggal: ${tanggalFaktur}</p>
-          <p>Nomor Penawaran: ${nomorPenawaran}</p>
-          <p>Perihal: ${perihal}</p>
-          <p>Kepada Yth,</p>
-          <p>${namaPenerima}</p>
-          <p>Di Tempat</p>
-          <hr>
-          ${generateItemsTable()}
-          <hr>
-          <p>Subtotal: ${subtotal}</p>
-          <p>Pajak: ${pajak}</p>
-          <p>Total: ${total}</p>
-          <p>Cara Pembayaran: ${caraPembayaran}</p>
-        `;
+          var previewContent =
+            "<hr>" +
+            "<p>Tanggal: " +
+            tanggalFaktur +
+            "</p>" +
+            "<p>Nomor Penawaran: " +
+            nomorPenawaran +
+            "</p>" +
+            "<p>Perihal: " +
+            perihal +
+            "</p>" +
+            "<p>Kepada Yth,</p>" +
+            "<p>" +
+            namaPenerima +
+            "</p>" +
+            "<p>Di Tempat</p>" +
+            "<hr>" +
+            generateItemsTable() +
+            "<hr>" +
+            "<p>Grand Total: " +
+            grandTotal +
+            "</p>";
+
           document.getElementById("penawaran-preview-content").innerHTML =
             previewContent;
         }
@@ -444,20 +468,36 @@
       function generateItemsTable() {
         var items = document.querySelectorAll("#items-table tbody tr");
         var itemHTML =
-          '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>Deskripsi</th><th>Harga (Rp)</th><th>Kuantitas</th><th>Jumlah (Rp)</th></tr>';
+          '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>No.</th><th>Item</th><th>Qty</th><th>P</th><th>L</th><th>Harga Satuan (Rp.)</th><th>Total Harga (Rp.)</th></tr>';
 
-        items.forEach(function (row) {
-          var deskripsi = row.querySelector('input[name="deskripsi[]"]').value;
-          var harga = row.querySelector('input[name="harga[]"]').value;
-          var kuantitas = row.querySelector('input[name="kuantitas[]"]').value;
-          var jumlah = row.querySelector('input[name="jumlah[]"]').value;
+        items.forEach(function (row, index) {
+          var item = row.querySelector('input[name="item[]"]').value;
+          var qty = row.querySelector('input[name="qty[]"]').value;
+          var ukuranP = row.querySelector('input[name="ukuran_p[]"]').value;
+          var ukuranL = row.querySelector('input[name="ukuran_l[]"]').value;
+          var hargaSatuan = row.querySelector(
+            'input[name="harga_satuan[]"]'
+          ).value;
+          var totalHarga = row.querySelector(
+            'input[name="total_harga[]"]'
+          ).value;
 
-          itemHTML += `<tr><td>${deskripsi}</td><td>${parseFloat(
-            harga
-          ).toLocaleString("id-ID", {
-            style: "currency",
-            currency: "IDR",
-          })}</td><td>${kuantitas}</td><td>${jumlah}</td></tr>`;
+          itemHTML +=
+            "<tr><td>" +
+            (index + 1) +
+            "</td><td>" +
+            item +
+            "</td><td>" +
+            qty +
+            "</td><td>" +
+            ukuranP +
+            "</td><td>" +
+            ukuranL +
+            "</td><td>" +
+            hargaSatuan +
+            "</td><td>" +
+            totalHarga +
+            "</td></tr>";
         });
 
         itemHTML += "</table>";
@@ -466,7 +506,14 @@
 
       function downloadPDF() {
         var element = document.getElementById("penawaran-preview-content");
-        html2pdf().from(element).save("penawaran-barang.pdf");
+        var opt = {
+          margin: [10, 10], // Margin (top, left, right, bottom)
+          filename: "penawaran-barang.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }, // A4 size in portrait orientation
+        };
+        html2pdf().from(element).set(opt).save();
       }
 
       function clearForm() {
@@ -475,21 +522,24 @@
 
         // Reset tabel barang
         var tableBody = document.querySelector("#items-table tbody");
-        tableBody.innerHTML = `<tr>
-                <td><input type="text" name="deskripsi[]" placeholder="Deskripsi barang"></td>
-                <td><input type="number" name="harga[]" placeholder="Harga barang" oninput="calculateTotal(this)"></td>
-                <td><input type="number" name="kuantitas[]" placeholder="Kuantitas" oninput="calculateTotal(this)"></td>
-                <td><input type="text" name="jumlah[]" placeholder="Jumlah" readonly></td>
-                <td><button type="button" class="remove" onclick="removeRow(this)">Hapus</button></td>
-            </tr>`;
+        tableBody.innerHTML = `
+        <tr>
+          <td>1</td>
+          <td><input type="text" name="item[]" placeholder="Nama barang"></td>
+          <td><input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)"></td>
+          <td><input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)"></td>
+          <td><input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)"></td>
+          <td><input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)"></td>
+          <td><input type="text" name="total_harga[]" placeholder="Total Harga" readonly></td>
+          <td><button type="button" class="remove" onclick="removeRow(this)">Hapus</button></td>
+        </tr>
+        `;
 
         // Sembunyikan preview
-        document.getElementById("preview-penawaran").style.display = "none";
+        document.getElementById("previewModal").style.display = "none";
 
-        // Reset total
-        document.getElementById("subtotal").value = "";
-        document.getElementById("pajak").value = "";
-        document.getElementById("total").value = "";
+        // Reset grand total
+        document.getElementById("grand_total").value = "";
       }
 
       // Close modal jika klik di luar modal
