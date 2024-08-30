@@ -393,7 +393,7 @@
         var reader = new FileReader();
         reader.onload = function (e) {
           var kopSuratHTML = kopSurat
-            ? `<img src="${e.target.result}" alt="Kop Surat" />`
+            ? `<img src="${e.target.result}" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />`
             : "";
 
           // Update konten preview
