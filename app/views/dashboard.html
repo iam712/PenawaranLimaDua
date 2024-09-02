@@ -412,13 +412,14 @@
             "<hr>" +
             "<p>Tanggal : " +
             tanggalFaktur +
-            "</p>" +
+            "</p><br>" + // Jarak antara Tanggal dan Nomor Penawaran
             "<p>Nomor Penawaran : " +
             nomorPenawaran +
             "</p>" +
             "<p>Perihal : " +
             perihal +
             "</p>" +
+            "<br>" + // Jarak antara Perihal dan Kepada Yth,
             "<p>Kepada Yth,</p>" +
             "<p>" +
             namaPenerima +
@@ -441,13 +442,14 @@
             "<hr>" +
             "<p>Tanggal : " +
             tanggalFaktur +
-            "</p>" +
+            "</p><br>" + // Jarak antara Tanggal dan Nomor Penawaran
             "<p>Nomor Penawaran : " +
             nomorPenawaran +
             "</p>" +
             "<p>Perihal : " +
             perihal +
             "</p>" +
+            "<br>" + // Jarak antara Perihal dan Kepada Yth,
             "<p>Kepada Yth,</p>" +
             "<p>" +
             namaPenerima +
@@ -522,8 +524,7 @@
 
         // Reset tabel barang
         var tableBody = document.querySelector("#items-table tbody");
-        tableBody.innerHTML = `
-        <tr>
+        tableBody.innerHTML = `<tr>
           <td>1</td>
           <td><input type="text" name="item[]" placeholder="Nama barang"></td>
           <td><input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)"></td>
@@ -532,8 +533,7 @@
           <td><input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)"></td>
           <td><input type="text" name="total_harga[]" placeholder="Total Harga" readonly></td>
           <td><button type="button" class="remove" onclick="removeRow(this)">Hapus</button></td>
-        </tr>
-        `;
+        </tr>`;
 
         // Sembunyikan preview
         document.getElementById("previewModal").style.display = "none";
