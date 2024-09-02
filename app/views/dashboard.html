@@ -186,6 +186,9 @@
       <label for="nama-penerima">Nama Penerima:</label>
       <input type="text" id="nama-penerima" name="nama-penerima" /><br />
 
+      <label for="nama-perusahaan">Nama Perusahaan:</label>
+      <input type="text" id="nama-perusahaan" name="nama-perusahaan" /><br />
+
       <label for="tanggal-jatuh-tempo">Tanggal Jatuh Tempo:</label>
       <input
         type="date"
@@ -397,6 +400,7 @@
         var nomorPenawaran = document.getElementById("nomor-penawaran").value;
         var perihal = document.getElementById("perihal").value;
         var namaPenerima = document.getElementById("nama-penerima").value;
+        var namaPerusahaan = document.getElementById("nama-perusahaan").value; // Nama Perusahaan
         var grandTotal = document.getElementById("grand_total").value;
 
         var reader = new FileReader();
@@ -416,7 +420,7 @@
             "<p>Nomor Penawaran : " +
             nomorPenawaran +
             "</p>" +
-            "<p>Perihal : " +
+            "<p>Hal : " +
             perihal +
             "</p>" +
             "<br>" + // Jarak antara Perihal dan Kepada Yth,
@@ -424,13 +428,25 @@
             "<p>" +
             namaPenerima +
             "</p>" +
-            "<p>Di Tempat</p>" +
+            "<p> Purchasing " +
+            namaPerusahaan +
+            "</p>" + // Menambahkan Nama Perusahaan sebelum "Di Tempat"
+            "<p>Di Tempat</p><br>" +
+            "<p>Dengan Hormat, </p>" +
+            "<p>Bersama surat ini kami mengajukan " +
+            perihal +
+            "dengan rincian sebagai berikut.</p><br>" +
             "<hr>" +
             generateItemsTable() +
             "<hr>" +
             "<p>Grand Total : " +
             grandTotal +
-            "</p>";
+            "</p><br>" +
+            "<p> Keterangan : </p>" +
+            "<p> Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
+            "<p> Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
+            "<p> Atas peprhatian dan kesempatan yang telah diberikan. Kami ucapkan terima kasih. </p><br>"+
+            "<p> Hormat Kami,</p>";
 
           document.getElementById("penawaran-preview-content").innerHTML =
             previewContent;
@@ -446,7 +462,7 @@
             "<p>Nomor Penawaran : " +
             nomorPenawaran +
             "</p>" +
-            "<p>Perihal : " +
+            "<p>Hal : " +
             perihal +
             "</p>" +
             "<br>" + // Jarak antara Perihal dan Kepada Yth,
@@ -454,7 +470,14 @@
             "<p>" +
             namaPenerima +
             "</p>" +
-            "<p>Di Tempat</p>" +
+            "<p> Purchasing " +
+            namaPerusahaan +
+            "</p>" + // Menambahkan Nama Perusahaan sebelum "Di Tempat"
+            "<p>Di Tempat</p><br>" +
+            "<p>Dengan Hormat, </p>" +
+            "<p>Bersama surat ini kami mengajukan " +
+            perihal +
+            "dengan rincian sebagai berikut.</p><br>" +
             "<hr>" +
             generateItemsTable() +
             "<hr>" +
