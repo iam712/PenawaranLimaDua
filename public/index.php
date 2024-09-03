@@ -19,7 +19,7 @@ if (!file_exists(__DIR__ . '/../config/config.php')) {
 $config = require __DIR__ . '/../config/config.php';
 
 // Set up database connection
-var_dump($config);
+// var_dump($config);
 
 try {
     $db = new PDO(
