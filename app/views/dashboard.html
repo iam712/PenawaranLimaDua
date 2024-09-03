@@ -280,6 +280,9 @@
         <input type="text" id="grand_total" readonly /><br />
       </div>
 
+      <label for="tanda-tangan">Upload TT Company:</label>
+      <input type="file" id="tanda-tangan" accept="image/*" /><br />
+
       <button type="button" onclick="openPreview()">Preview Penawaran</button>
       <button type="button" onclick="downloadPDF()">Download PDF</button>
       <button type="button" class="clear" onclick="clearForm()">
@@ -394,16 +397,21 @@
       }
 
       function previewPenawaran() {
-        // Code to generate and display the preview of the offer form
-        var kopSurat = document.getElementById("kop-surat").files[0];
+        // Get all necessary form values
         var tanggalFaktur = document.getElementById("tanggal-faktur").value;
         var nomorPenawaran = document.getElementById("nomor-penawaran").value;
         var perihal = document.getElementById("perihal").value;
         var namaPenerima = document.getElementById("nama-penerima").value;
-        var namaPerusahaan = document.getElementById("nama-perusahaan").value; // Nama Perusahaan
+        var namaPerusahaan = document.getElementById("nama-perusahaan").value;
         var grandTotal = document.getElementById("grand_total").value;
 
+        // Handle kop surat and tanda tangan images
+        var kopSurat = document.getElementById("kop-surat").files[0];
+        var tandaTangan = document.getElementById("tanda-tangan").files[0];
+
         var reader = new FileReader();
+        var previewContent = "";
+
         reader.onload = function (e) {
           var kopSuratHTML = kopSurat
             ? '<img src="' +
@@ -411,82 +419,65 @@
               '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
             : "";
 
-          var previewContent =
-            kopSuratHTML +
-            "<hr>" +
-            "<p>Tanggal : " +
-            tanggalFaktur +
-            "</p><br>" + // Jarak antara Tanggal dan Nomor Penawaran
-            "<p>Nomor Penawaran : " +
-            nomorPenawaran +
-            "</p>" +
-            "<p>Hal : " +
-            perihal +
-            "</p>" +
-            "<br>" + // Jarak antara Perihal dan Kepada Yth,
-            "<p>Kepada Yth,</p>" +
-            "<p>" +
-            namaPenerima +
-            "</p>" +
-            "<p> Purchasing " +
-            namaPerusahaan +
-            "</p>" + // Menambahkan Nama Perusahaan sebelum "Di Tempat"
-            "<p>Di Tempat</p><br>" +
-            "<p>Dengan Hormat, </p>" +
-            "<p>Bersama surat ini kami mengajukan " +
-            perihal +
-            "dengan rincian sebagai berikut.</p><br>" +
-            "<hr>" +
-            generateItemsTable() +
-            "<hr>" +
-            "<p>Grand Total : " +
-            grandTotal +
-            "</p><br>" +
-            "<p> Keterangan : </p>" +
-            "<p> Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
-            "<p> Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
-            "<p> Atas peprhatian dan kesempatan yang telah diberikan. Kami ucapkan terima kasih. </p><br>"+
-            "<p> Hormat Kami,</p>";
+          var tandaTanganReader = new FileReader();
+          tandaTanganReader.onload = function (e) {
+            var tandaTanganHTML = tandaTangan
+              ? '<img src="' +
+                e.target.result +
+                '" alt="Tanda Tangan" style="max-width: 100px; height: auto; display: block; margin: 0 auto;" />'
+              : "";
 
-          document.getElementById("penawaran-preview-content").innerHTML =
-            previewContent;
+            previewContent =
+              kopSuratHTML +
+              "<hr>" +
+              "<p>Tanggal: " +
+              tanggalFaktur +
+              "</p><br>" +
+              "<p>Nomor Penawaran: " +
+              nomorPenawaran +
+              "</p>" +
+              "<p>Perihal: " +
+              perihal +
+              "</p><br>" +
+              "<p>Kepada Yth,</p>" +
+              "<p>" +
+              namaPenerima +
+              "</p>" +
+              "<p>Purchasing " +
+              namaPerusahaan +
+              "</p>" +
+              "<p>Di Tempat</p><br>" +
+              "<p>Dengan Hormat,</p>" +
+              "<p>Bersama surat ini kami mengajukan " +
+              perihal +
+              " dengan rincian sebagai berikut:</p>" +
+              "<hr>" +
+              generateItemsTable() +
+              "<hr>" +
+              "<p>Grand Total: " +
+              grandTotal +
+              "</p><br>" +
+              "<p>Keterangan: Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
+              "<p>Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
+              "<p>Atas perhatian dan kesempatan yang telah diberikan, kami ucapkan terima kasih.</p><br>" +
+              "<p>Hormat Kami,</p>" +
+              tandaTanganHTML;
+
+            document.getElementById("penawaran-preview-content").innerHTML =
+              previewContent;
+          };
+
+          if (tandaTangan) {
+            tandaTanganReader.readAsDataURL(tandaTangan);
+          } else {
+            tandaTanganReader.onload();
+          }
         };
+
         if (kopSurat) {
           reader.readAsDataURL(kopSurat);
         } else {
-          var previewContent =
-            "<hr>" +
-            "<p>Tanggal : " +
-            tanggalFaktur +
-            "</p><br>" + // Jarak antara Tanggal dan Nomor Penawaran
-            "<p>Nomor Penawaran : " +
-            nomorPenawaran +
-            "</p>" +
-            "<p>Hal : " +
-            perihal +
-            "</p>" +
-            "<br>" + // Jarak antara Perihal dan Kepada Yth,
-            "<p>Kepada Yth,</p>" +
-            "<p>" +
-            namaPenerima +
-            "</p>" +
-            "<p> Purchasing " +
-            namaPerusahaan +
-            "</p>" + // Menambahkan Nama Perusahaan sebelum "Di Tempat"
-            "<p>Di Tempat</p><br>" +
-            "<p>Dengan Hormat, </p>" +
-            "<p>Bersama surat ini kami mengajukan " +
-            perihal +
-            "dengan rincian sebagai berikut.</p><br>" +
-            "<hr>" +
-            generateItemsTable() +
-            "<hr>" +
-            "<p>Grand Total : " +
-            grandTotal +
-            "</p>";
-
-          document.getElementById("penawaran-preview-content").innerHTML =
-            previewContent;
+          reader.onload();
         }
       }
 
