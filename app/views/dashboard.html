@@ -80,6 +80,15 @@
       margin-bottom: 20px;
     }
 
+    .buttons-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
     button {
       padding: 10px 20px;
       background-color: #28a745;
@@ -90,6 +99,18 @@
       font-size: 14px;
       transition: background-color 0.3s ease;
       margin-bottom: 10px;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .logout-btn:hover {
+      background-color: #c82333;
     }
 
     button:hover {
@@ -171,9 +192,7 @@
 <body>
   <h2>Form Penawaran Barang</h2>
   <!-- <p>Hello, <strong><%= user.username %></strong></p> -->
-  <form action="/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
+
   <form id="penawaran-form">
     <label for="kop-surat">Upload Kop Surat:</label>
     <input type="file" id="kop-surat" accept="image/*" /><br />
@@ -257,12 +276,17 @@
 
     <label for="tanda-tangan">Upload TT Company:</label>
     <input type="file" id="tanda-tangan" accept="image/*" /><br />
+    <div class="buttons-container">
+      <button type="button" onclick="openPreview()">Preview Penawaran</button>
+      <button type="button" onclick="downloadPDF()">Download PDF</button>
+      <button type="button" class="clear" onclick="clearForm()">
+        Hapus Isi Form
+      </button>
+    </div>
+    <form action="/logout" method="POST">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
 
-    <button type="button" onclick="openPreview()">Preview Penawaran</button>
-    <button type="button" onclick="downloadPDF()">Download PDF</button>
-    <button type="button" class="clear" onclick="clearForm()">
-      Hapus Isi Form
-    </button>
   </form>
 
   <!-- Modal untuk Preview -->
@@ -282,6 +306,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
   <script>
+
+
+
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Add content to the PDF
+    doc.text("Hello, this is your PDF content!", 10, 10);
+    
+    // Save the generated PDF
+    doc.save("penawaran.pdf");
+  }
+
     function addRow() {
       var table = document
         .getElementById("items-table")
@@ -362,9 +400,27 @@
         });
     }
 
+    function validateForm() {
+      let valid = true;
+      let requiredFields = document.querySelectorAll("input[name='item[]'], input[name='qty[]'], input[name='ukuran_p[]'], input[name='ukuran_l[]'], input[name='harga_satuan[]']");
+      requiredFields.forEach((field) => {
+        if (field.value === "") {
+          valid = false;
+          field.style.border = "1px solid red"; // Highlight missing fields
+        } else {
+          field.style.border = "";
+        }
+      });
+      return valid;
+    }
+
     function openPreview() {
-      document.getElementById("previewModal").style.display = "block";
-      previewPenawaran();
+      if (validateForm()) {
+        document.getElementById("previewModal").style.display = "block";
+        previewPenawaran();
+      } else {
+        alert("Please complete all item fields before previewing.");
+      }
     }
 
     function closePreview() {
@@ -539,6 +595,7 @@
       }
     };
   </script>
+
 </body>
 
 </html>
