@@ -192,6 +192,8 @@
     }
 
     .modal-content .grand-total {
+      display: flex;
+      justify-content: end;
       text-align: right;
       font-weight: bold;
       margin-top: 10px;
@@ -261,7 +263,7 @@
   <h2>Form Penawaran Barang</h2>
   <form id="penawaran-form">
     <label for="kop-surat">Upload Kop Surat:</label>
-    <input type="file" id="kop-surat" accept="image/*" /><br />
+    <input type="file" id="kop-surat" accept="image/*" /><br>
 
     <label for="tanggal-faktur">Tanggal Faktur:</label>
     <input type="date" id="tanggal-faktur" name="tanggal-faktur" /><br />
