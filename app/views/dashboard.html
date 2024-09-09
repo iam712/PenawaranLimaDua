@@ -1,642 +1,702 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Penawaran Barang</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+        color: #333;
+        font-size: 14px;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Form Penawaran Barang</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f4f4f9;
-      color: #333;
-      font-size: 14px;
-      /* Decreased font size */
-    }
-
-    table,
-    p {
-      font-size: 12px;
-      /* Smaller font size for tables and paragraphs */
-    }
-
-    h2 {
-      color: #333;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .company-header img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    form {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      overflow: hidden;
-      font-size: 12px;
-    }
-
-    table,
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 10px;
-    }
-
-    th {
-      background-color: #f8f9fa;
-      text-align: left;
-      color: #495057;
-    }
-
-    td {
-      background-color: #ffffff;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-
-    select {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
-
-    .buttons-container {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-      margin-bottom: 10px;
-    }
-
-    .logout-btn {
-      background-color: #dc3545;
-      color: white;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .logout-btn:hover {
-      background-color: #c82333;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-
-    button.remove {
-      background-color: #dc3545;
-    }
-
-    button.remove:hover {
-      background-color: #c82333;
-    }
-
-    button.clear {
-      background-color: #007bff;
-    }
-
-    button.clear:hover {
-      background-color: #0069d9;
-    }
-
-    .total-section {
-      text-align: right;
-    }
-
-    .total-section label {
-      font-weight: bold;
-    }
-
-    .table-responsive {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      padding-top: 60px;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      border-radius: 8px;
-      width: 80%;
-      position: relative;
-      align-items: flex-end;
-    }
-
-    .modal-content table {
-      width: 100%;
-      /* Ensure the table takes full width */
-    }
-
-    .modal-content td:last-child,
-    .modal-content th:last-child {
-      text-align: right;
-      /* Aligns the content of the last column to the right */
-    }
-
-    .modal-content .grand-total {
-      display: flex;
-      justify-content: end;
-      text-align: right;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .close {
-      color: #aaa;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .download-icon {
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .container {
-      overflow: visible;
-    }
-
-    @media (max-width: 576px) {
-      th {
+      table,
+      p {
         font-size: 12px;
-        white-space: nowrap;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .table thead {
-        display: none;
       }
 
-      .table tbody td {
-        display: block;
+      h2 {
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .company-header img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        font-size: 12px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        text-align: left;
+        color: #495057;
+      }
+
+      td {
+        background-color: #ffffff;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+
+      select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+      }
+
+      .buttons-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        margin-bottom: 10px;
+      }
+
+      .logout-btn {
+        background-color: #dc3545;
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .logout-btn:hover {
+        background-color: #c82333;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      button.remove {
+        background-color: #dc3545;
+      }
+
+      button.remove:hover {
+        background-color: #c82333;
+      }
+
+      button.clear {
+        background-color: #007bff;
+      }
+
+      button.clear:hover {
+        background-color: #0069d9;
+      }
+
+      .total-section {
         text-align: right;
-        position: relative;
-        padding-left: 50%;
       }
 
-      .table tbody td::before {
-        content: attr(data-label);
-        position: absolute;
+      .total-section label {
+        font-weight: bold;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        padding-top: 60px;
         left: 0;
         top: 0;
-        width: 50%;
-        padding-left: 10px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 8px;
+        width: 80%;
+        position: relative;
+        align-items: flex-end;
+      }
+
+      .modal-content table {
+        width: 100%;
+      }
+
+      .modal-content td:last-child,
+      .modal-content th:last-child {
+        text-align: right;
+      }
+
+      .modal-content .grand-total {
+        display: flex;
+        justify-content: end;
+        text-align: right;
         font-weight: bold;
-        text-align: left;
-        white-space: nowrap;
+        margin-top: 10px;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <h2>Form Penawaran Barang</h2>
-  <form id="penawaran-form">
-    <label for="kop-surat">Upload Kop Surat:</label>
-    <input type="file" id="kop-surat" accept="image/*" /><br>
+      .close {
+        color: #aaa;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-    <label for="tanggal-faktur">Tanggal Faktur:</label>
-    <input type="date" id="tanggal-faktur" name="tanggal-faktur" /><br />
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
-    <label for="nomor-penawaran">Nomor Penawaran:</label>
-    <input type="text" id="nomor-penawaran" name="nomor-penawaran" /><br />
+      .download-icon {
+        font-size: 24px;
+        cursor: pointer;
+      }
 
-    <label for="perihal">Perihal:</label>
-    <input type="text" id="perihal" name="perihal" /><br />
+      .container {
+        overflow: visible;
+      }
 
-    <label for="nama-penerima">Nama Penerima:</label>
-    <input type="text" id="nama-penerima" name="nama-penerima" /><br />
+      @media (max-width: 576px) {
+        th {
+          font-size: 12px;
+          white-space: nowrap;
+        }
+      }
 
-    <label for="nama-perusahaan">Nama Perusahaan:</label>
-    <input type="text" id="nama-perusahaan" name="nama-perusahaan" /><br />
+      @media (max-width: 576px) {
+        .table thead {
+          display: none;
+        }
 
-    <label for="tanggal-jatuh-tempo">Tanggal Jatuh Tempo:</label>
-    <input type="date" id="tanggal-jatuh-tempo" name="tanggal-jatuh-tempo" /><br />
+        .table tbody td {
+          display: block;
+          text-align: right;
+          position: relative;
+          padding-left: 50%;
+        }
 
-    <div class="table-responsive">
-      <table id="items-table">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Item</th>
-            <th>Qty</th>
-            <th colspan="2">Ukuran (CM)</th>
-            <th>Harga Satuan (Rp.)</th>
-            <th>Total Harga (Rp.)</th>
-            <th>Aksi</th>
-          </tr>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>P</th>
-            <th>L</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-label="No">1</td>
-            <td data-label="Item">
-              <input type="text" name="item[]" placeholder="Nama barang" />
-            </td>
-            <td data-label="Qty">
-              <input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)" />
-            </td>
-            <td data-label="Ukuran">
-              <input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)" />
-            </td>
-            <td data-label="Ukuran">
-              <input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)" />
-            </td>
-            <td data-label="Harga Satuan">
-              <input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)" />
-            </td>
-            <td data-label="Total Harga">
-              <input type="text" name="total_harga[]" placeholder="Total Harga" readonly />
-            </td>
-            <td data-label="Actions">
-              <button type="button" class="remove" onclick="removeRow(this)">
-                Hapus
-              </button>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <!-- Adjust colspan to make "Grand Total" aligned with "Total Harga" column -->
-            <td colspan="6" style="text-align: right;">
-              <strong>Grand Total:</strong>
-            </td>
-            <td style="text-align: right;">
-              <input type="text" id="grand_total" readonly style="border: none; font-weight: bold;" />
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+        .table tbody td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 50%;
+          padding-left: 10px;
+          font-weight: bold;
+          text-align: left;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
 
-    <button type="button" onclick="addRow()">Tambah Barang</button><br />
+  <body>
+    <h2>Form Penawaran Barang</h2>
+    <form id="penawaran-form">
+      <label for="kop-surat">Upload Kop Surat:</label>
+      <input type="file" id="kop-surat" accept="image/*" /><br />
 
-    <label for="tanda-tangan">Upload TT Company:</label>
-    <input type="file" id="tanda-tangan" accept="image/*" /><br />
-    <div class="buttons-container">
-      <button type="button" onclick="openPreview()">Preview Penawaran</button>
-      <button type="button" onclick="downloadPDF()">Download PDF</button>
-      <button type="button" class="clear" onclick="clearForm()">
-        Hapus Isi Form
-      </button>
-    </div>
-    <form action="/logout" method="POST">
-      <button type="submit" class="logout-btn">Logout</button>
-    </form>
-  </form>
+      <label for="tanggal-faktur">Tanggal Faktur:</label>
+      <input type="date" id="tanggal-faktur" name="tanggal-faktur" /><br />
 
-  <!-- Modal untuk Preview -->
-  <div id="previewModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closePreview()">&times;</span>
-      <h3>Preview Penawaran Barang</h3>
-      <div id="penawaran-preview-content"></div>
-      <br />
-      <div class="grand-total">
-        <strong>Grand Total:</strong> <span id="grand_total_preview"></span>
+      <label for="nomor-penawaran">Nomor Penawaran:</label>
+      <input type="text" id="nomor-penawaran" name="nomor-penawaran" /><br />
+
+      <label for="perihal">Perihal:</label>
+      <input type="text" id="perihal" name="perihal" /><br />
+
+      <label for="nama-penerima">Nama Penerima:</label>
+      <input type="text" id="nama-penerima" name="nama-penerima" /><br />
+
+      <label for="nama-perusahaan">Nama Perusahaan:</label>
+      <input type="text" id="nama-perusahaan" name="nama-perusahaan" /><br />
+
+      <label for="tanggal-jatuh-tempo">Tanggal Jatuh Tempo:</label>
+      <input
+        type="date"
+        id="tanggal-jatuh-tempo"
+        name="tanggal-jatuh-tempo"
+      /><br />
+
+      <div class="table-responsive">
+        <table id="items-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Item</th>
+              <th>Qty</th>
+              <th colspan="2">Ukuran (CM)</th>
+              <th>Harga Satuan (Rp.)</th>
+              <th>Total Harga (Rp.)</th>
+              <th>Aksi</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>P</th>
+              <th>L</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="No">1</td>
+              <td data-label="Item">
+                <input type="text" name="item[]" placeholder="Nama barang" />
+              </td>
+              <td data-label="Qty">
+                <input
+                  type="number"
+                  name="qty[]"
+                  placeholder="Kuantitas"
+                  oninput="calculateTotal(this)"
+                />
+              </td>
+              <td data-label="Ukuran">
+                <input
+                  type="number"
+                  name="ukuran_p[]"
+                  placeholder="Panjang"
+                  oninput="calculateTotal(this)"
+                />
+              </td>
+              <td data-label="Ukuran">
+                <input
+                  type="number"
+                  name="ukuran_l[]"
+                  placeholder="Lebar"
+                  oninput="calculateTotal(this)"
+                />
+              </td>
+              <td data-label="Harga Satuan">
+                <input
+                  type="number"
+                  name="harga_satuan[]"
+                  placeholder="Harga Satuan"
+                  oninput="calculateTotal(this)"
+                />
+              </td>
+              <td data-label="Total Harga">
+                <input
+                  type="text"
+                  name="total_harga[]"
+                  placeholder="Total Harga"
+                  readonly
+                />
+              </td>
+              <td data-label="Actions">
+                <button type="button" class="remove" onclick="removeRow(this)">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" style="text-align: right">
+                <strong>Grand Total:</strong>
+              </td>
+              <td style="text-align: right">
+                <input
+                  type="text"
+                  id="grand_total"
+                  readonly
+                  style="border: none; font-weight: bold"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
-      <br />
-      <button type="button" onclick="downloadPDF()">
-        <i class="download-icon">💾 Download PDF</i>
-      </button>
+
+      <button type="button" onclick="addRow()">Tambah Barang</button><br />
+
+      <label for="tanda-tangan">Upload TT Company:</label>
+      <input type="file" id="tanda-tangan" accept="image/*" /><br />
+      <div class="buttons-container">
+        <button type="button" onclick="openPreview()">Preview Penawaran</button>
+        <button type="button" onclick="downloadPDF()">Download PDF</button>
+        <button type="button" class="clear" onclick="clearForm()">
+          Hapus Isi Form
+        </button>
+      </div>
+      <form action="/logout" method="POST">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </form>
+
+    <!-- Modal untuk Preview -->
+    <div id="previewModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closePreview()">&times;</span>
+        <h3>Preview Penawaran Barang</h3>
+        <div id="penawaran-preview-content"></div>
+        <br />
+        <div class="grand-total">
+          <strong>Grand Total:</strong> <span id="grand_total_preview"></span>
+        </div>
+        <br />
+        <button type="button" onclick="downloadPDF()">
+          <i class="download-icon">💾 Download PDF</i>
+        </button>
+      </div>
     </div>
-  </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+      function addRow() {
+        var table = document
+          .getElementById("items-table")
+          .getElementsByTagName("tbody")[0];
+        var rowCount = table.rows.length;
+        var newRow = table.insertRow();
 
-  <script>
-    function addRow() {
-      var table = document
-        .getElementById("items-table")
-        .getElementsByTagName("tbody")[0];
-      var rowCount = table.rows.length;
-      var newRow = table.insertRow();
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+        var cell5 = newRow.insertCell(4);
+        var cell6 = newRow.insertCell(5);
+        var cell7 = newRow.insertCell(6);
+        var cell8 = newRow.insertCell(7);
 
-      var cell1 = newRow.insertCell(0);
-      var cell2 = newRow.insertCell(1);
-      var cell3 = newRow.insertCell(2);
-      var cell4 = newRow.insertCell(3);
-      var cell5 = newRow.insertCell(4);
-      var cell6 = newRow.insertCell(5);
-      var cell7 = newRow.insertCell(6);
-      var cell8 = newRow.insertCell(7);
-
-      cell1.innerHTML = rowCount + 1;
-      cell2.innerHTML =
-        '<input type="text" name="item[]" placeholder="Nama barang">';
-      cell3.innerHTML =
-        '<input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)">';
-      cell4.innerHTML =
-        '<input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)">';
-      cell5.innerHTML =
-        '<input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)">';
-      cell6.innerHTML =
-        '<input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)">';
-      cell7.innerHTML =
-        '<input type="text" name="total_harga[]" placeholder="Total Harga" readonly>';
-      cell8.innerHTML =
-        '<button type="button" class="remove" onclick="removeRow(this)">Hapus</button>';
-    }
-
-    function removeRow(button) {
-      var row = button.parentElement.parentElement;
-      row.parentElement.removeChild(row);
-      calculateGrandTotal();
-    }
-
-    function calculateTotal(element) {
-      var row = element.parentElement.parentElement;
-      var qty = row.querySelector('input[name="qty[]"]').value;
-      var panjang = row.querySelector('input[name="ukuran_p[]"]').value;
-      var lebar = row.querySelector('input[name="ukuran_l[]"]').value;
-      var hargaSatuan = row.querySelector(
-        'input[name="harga_satuan[]"]'
-      ).value;
-      var totalHarga = row.querySelector('input[name="total_harga[]"]');
-
-      if (qty && panjang && lebar && hargaSatuan) {
-        var totalAmount = qty * panjang * lebar * hargaSatuan;
-        totalHarga.value = totalAmount.toLocaleString("id-ID", {
-          style: "currency",
-          currency: "IDR",
-        });
-      } else {
-        totalHarga.value = "Rp0";
+        cell1.innerHTML = rowCount + 1;
+        cell2.innerHTML =
+          '<input type="text" name="item[]" placeholder="Nama barang">';
+        cell3.innerHTML =
+          '<input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)">';
+        cell4.innerHTML =
+          '<input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)">';
+        cell5.innerHTML =
+          '<input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)">';
+        cell6.innerHTML =
+          '<input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)">';
+        cell7.innerHTML =
+          '<input type="text" name="total_harga[]" placeholder="Total Harga" readonly>';
+        cell8.innerHTML =
+          '<button type="button" class="remove" onclick="removeRow(this)">Hapus</button>';
       }
 
-      calculateGrandTotal();
-    }
-
-    function calculateGrandTotal() {
-      var rows = document.querySelectorAll("#items-table tbody tr");
-      var grandTotal = 0;
-
-      rows.forEach(function (row) {
-        var totalHarga = row
-          .querySelector('input[name="total_harga[]"]')
-          .value.replace(/[^0-9,-]+/g, "");
-        grandTotal += parseFloat(totalHarga) || 0;
-      });
-
-      document.getElementById("grand_total").value =
-        grandTotal.toLocaleString("id-ID", {
-          style: "currency",
-          currency: "IDR",
-        });
-    }
-
-    function validateForm() {
-      let valid = true;
-      let requiredFields = document.querySelectorAll(
-        "input[name='item[]'], input[name='qty[]'], input[name='ukuran_p[]'], input[name='ukuran_l[]'], input[name='harga_satuan[]']"
-      );
-      requiredFields.forEach((field) => {
-        if (field.value === "") {
-          valid = false;
-          field.style.border = "1px solid red";
-        } else {
-          field.style.border = "";
-        }
-      });
-      return valid;
-    }
-
-    function openPreview() {
-      if (validateForm()) {
-        document.getElementById("previewModal").style.display = "block";
-        previewPenawaran();
-      } else {
-        alert("Please complete all item fields before previewing.");
+      function removeRow(button) {
+        var row = button.parentElement.parentElement;
+        row.parentElement.removeChild(row);
+        calculateGrandTotal();
       }
-    }
 
-    function closePreview() {
-      document.getElementById("previewModal").style.display = "none";
-    }
-
-    function previewPenawaran() {
-      var tanggalFaktur = document.getElementById("tanggal-faktur").value;
-      var nomorPenawaran = document.getElementById("nomor-penawaran").value;
-      var perihal = document.getElementById("perihal").value;
-      var namaPenerima = document.getElementById("nama-penerima").value;
-      var namaPerusahaan = document.getElementById("nama-perusahaan").value;
-      var grandTotal = document.getElementById("grand_total").value;
-
-      var kopSurat = document.getElementById("kop-surat").files[0];
-      var tandaTangan = document.getElementById("tanda-tangan").files[0];
-
-      var reader = new FileReader();
-      var previewContent = "";
-
-      reader.onload = function (e) {
-        var kopSuratHTML = kopSurat
-          ? '<img src="' + e.target.result + '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
-          : "";
-
-        var tandaTanganReader = new FileReader();
-        tandaTanganReader.onload = function (e) {
-          var tandaTanganHTML = tandaTangan
-            ? '<img src="' + e.target.result + '" alt="Tanda Tangan" style="max-width: 150px; height: auto; display: block; margin-left: 0;" />'
-            : "";
-
-          previewContent =
-            kopSuratHTML +
-            "<hr>" +
-            "<p>Tanggal: " + tanggalFaktur + "</p><br>" +
-            "<p>Nomor Penawaran: " + nomorPenawaran + "</p>" +
-            "<p>Perihal: " + perihal + "</p><br>" +
-            "<p>Kepada Yth,</p>" +
-            "<p>" + namaPenerima + "</p>" +
-            "<p>Purchasing " + namaPerusahaan + "</p>" +
-            "<p>Di Tempat</p><br>" +
-            "<p>Dengan Hormat,</p>" +
-            "<p>Bersama surat ini kami mengajukan " + perihal + " dengan rincian sebagai berikut:</p>" +
-            "<hr>" +
-            generateItemsTable() +
-            "<hr>" +
-            // Updated Grand Total alignment
-            "<table style='width: 100%;'><tr><td colspan='3' style='text-align: right;'><strong>Grand Total:</strong></td><td style='text-align: right;'>" +
-            grandTotal + "</td></tr></table><br>" +
-            "<p>Keterangan: Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
-            "<p>Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
-            "<p>Atas perhatian dan kesempatan yang telah diberikan, kami ucapkan terima kasih.</p><br>" +
-            "<p>Hormat Kami,</p><br>" +
-            tandaTanganHTML;
-
-          document.getElementById("penawaran-preview-content").innerHTML = previewContent;
-          document.getElementById("grand_total_preview").innerText = grandTotal;
-        };
-
-        if (tandaTangan) {
-          tandaTanganReader.readAsDataURL(tandaTangan);
-        } else {
-          tandaTanganReader.onload();
-        }
-      };
-
-      if (kopSurat) {
-        reader.readAsDataURL(kopSurat);
-      } else {
-        reader.onload();
-      }
-    }
-
-    function generateItemsTable() {
-      var items = document.querySelectorAll("#items-table tbody tr");
-      var itemHTML =
-        '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>No.</th><th>Item</th><th>Qty</th><th>P</th><th>L</th><th>Harga Satuan (Rp.)</th><th>Total Harga (Rp.)</th></tr>';
-
-      items.forEach(function (row, index) {
-        var item = row.querySelector('input[name="item[]"]').value;
+      function calculateTotal(element) {
+        var row = element.parentElement.parentElement;
         var qty = row.querySelector('input[name="qty[]"]').value;
-        var ukuranP = row.querySelector('input[name="ukuran_p[]"]').value;
-        var ukuranL = row.querySelector('input[name="ukuran_l[]"]').value;
+        var panjang = row.querySelector('input[name="ukuran_p[]"]').value;
+        var lebar = row.querySelector('input[name="ukuran_l[]"]').value;
         var hargaSatuan = row.querySelector(
           'input[name="harga_satuan[]"]'
         ).value;
-        var totalHarga = row.querySelector(
-          'input[name="total_harga[]"]'
-        ).value;
+        var totalHarga = row.querySelector('input[name="total_harga[]"]');
 
+        if (qty && panjang && lebar && hargaSatuan) {
+          var totalAmount = qty * panjang * lebar * hargaSatuan;
+          totalHarga.value = totalAmount.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          });
+        } else {
+          totalHarga.value = "Rp0";
+        }
+
+        calculateGrandTotal();
+      }
+
+      function calculateGrandTotal() {
+        var rows = document.querySelectorAll("#items-table tbody tr");
+        var grandTotal = 0;
+
+        rows.forEach(function (row) {
+          var totalHarga = row
+            .querySelector('input[name="total_harga[]"]')
+            .value.replace(/[^0-9,-]+/g, "");
+          grandTotal += parseFloat(totalHarga) || 0;
+        });
+
+        document.getElementById("grand_total").value =
+          grandTotal.toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          });
+      }
+
+      function validateForm() {
+        let valid = true;
+        let requiredFields = document.querySelectorAll(
+          "input[name='item[]'], input[name='qty[]'], input[name='ukuran_p[]'], input[name='ukuran_l[]'], input[name='harga_satuan[]']"
+        );
+        requiredFields.forEach((field) => {
+          if (field.value === "") {
+            valid = false;
+            field.style.border = "1px solid red";
+          } else {
+            field.style.border = "";
+          }
+        });
+        return valid;
+      }
+
+      function openPreview() {
+        if (validateForm()) {
+          document.getElementById("previewModal").style.display = "block";
+          previewPenawaran();
+        } else {
+          alert("Please complete all item fields before previewing.");
+        }
+      }
+
+      function closePreview() {
+        document.getElementById("previewModal").style.display = "none";
+      }
+
+      function previewPenawaran() {
+        var tanggalFaktur = document.getElementById("tanggal-faktur").value;
+        var nomorPenawaran = document.getElementById("nomor-penawaran").value;
+        var perihal = document.getElementById("perihal").value;
+        var namaPenerima = document.getElementById("nama-penerima").value;
+        var namaPerusahaan = document.getElementById("nama-perusahaan").value;
+        var grandTotal = document.getElementById("grand_total").value;
+
+        var kopSurat = document.getElementById("kop-surat").files[0];
+        var tandaTangan = document.getElementById("tanda-tangan").files[0];
+
+        var reader = new FileReader();
+        var previewContent = "";
+
+        reader.onload = function (e) {
+          var kopSuratHTML = kopSurat
+            ? '<img src="' +
+              e.target.result +
+              '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
+            : "";
+
+          var tandaTanganReader = new FileReader();
+          tandaTanganReader.onload = function (e) {
+            var tandaTanganHTML = tandaTangan
+              ? '<img src="' +
+                e.target.result +
+                '" alt="Tanda Tangan" style="max-width: 150px; height: auto; display: block; margin-left: 0;" />'
+              : "";
+
+            previewContent =
+              kopSuratHTML +
+              "<hr>" +
+              "<p>Tanggal: " +
+              tanggalFaktur +
+              "</p><br>" +
+              "<p>Nomor Penawaran: " +
+              nomorPenawaran +
+              "</p>" +
+              "<p>Perihal: " +
+              perihal +
+              "</p><br>" +
+              "<p>Kepada Yth,</p>" +
+              "<p>" +
+              namaPenerima +
+              "</p>" +
+              "<p>Purchasing " +
+              namaPerusahaan +
+              "</p>" +
+              "<p>Di Tempat</p><br>" +
+              "<p>Dengan Hormat,</p>" +
+              "<p>Bersama surat ini kami mengajukan " +
+              perihal +
+              " dengan rincian sebagai berikut:</p>" +
+              "<hr>" +
+              generateItemsTable() +
+              "<hr>" +
+              "<p>Keterangan: Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
+              "<p>Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
+              "<p>Atas perhatian dan kesempatan yang telah diberikan, kami ucapkan terima kasih.</p><br>" +
+              "<p>Hormat Kami,</p><br>" +
+              tandaTanganHTML;
+
+            document.getElementById("penawaran-preview-content").innerHTML =
+              previewContent;
+            document.getElementById("grand_total_preview").innerText =
+              grandTotal;
+          };
+
+          if (tandaTangan) {
+            tandaTanganReader.readAsDataURL(tandaTangan);
+          } else {
+            tandaTanganReader.onload();
+          }
+        };
+
+        if (kopSurat) {
+          reader.readAsDataURL(kopSurat);
+        } else {
+          reader.onload();
+        }
+      }
+
+      function generateItemsTable() {
+        var items = document.querySelectorAll("#items-table tbody tr");
+        var itemHTML =
+          '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>No.</th><th>Item</th><th>Qty</th><th>P</th><th>L</th><th>Harga Satuan (Rp.)</th><th>Total Harga (Rp.)</th></tr>';
+
+        items.forEach(function (row, index) {
+          var item = row.querySelector('input[name="item[]"]').value;
+          var qty = row.querySelector('input[name="qty[]"]').value;
+          var ukuranP = row.querySelector('input[name="ukuran_p[]"]').value;
+          var ukuranL = row.querySelector('input[name="ukuran_l[]"]').value;
+          var hargaSatuan = row.querySelector(
+            'input[name="harga_satuan[]"]'
+          ).value;
+          var totalHarga = row.querySelector(
+            'input[name="total_harga[]"]'
+          ).value;
+
+          itemHTML +=
+            "<tr><td>" +
+            (index + 1) +
+            "</td><td>" +
+            item +
+            "</td><td>" +
+            qty +
+            "</td><td>" +
+            ukuranP +
+            "</td><td>" +
+            ukuranL +
+            "</td><td>" +
+            hargaSatuan +
+            "</td><td>" +
+            totalHarga +
+            "</td></tr>";
+        });
+
+        // Adding the row for Grand Total
         itemHTML +=
-          "<tr><td>" +
-          (index + 1) +
-          "</td><td>" +
-          item +
-          "</td><td>" +
-          qty +
-          "</td><td>" +
-          ukuranP +
-          "</td><td>" +
-          ukuranL +
-          "</td><td>" +
-          hargaSatuan +
-          "</td><td>" +
-          totalHarga +
-          "</td></tr>";
-      });
+          '<tr><td colspan="5" style="text-align: right;"><strong>Grand Total:</strong></td>' +
+          '<td colspan="2" style="text-align: right;"><span id="grand_total_preview"></span></td></tr>';
 
-      itemHTML += "</table>";
-      return itemHTML;
-    }
+        itemHTML += "</table>";
+        return itemHTML;
+      }
 
-    function downloadPDF() {
-      var element = document.getElementById("penawaran-preview-content");
-      var opt = {
-        margin: [10, 10],
-        filename: "penawaran-barang.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      };
-      html2pdf().from(element).set(opt).save();
-    }
+      function downloadPDF() {
+        var element = document.getElementById("penawaran-preview-content");
+        var opt = {
+          margin: [10, 10],
+          filename: "penawaran-barang.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+        html2pdf().from(element).set(opt).save();
+      }
 
-    function clearForm() {
-      document.getElementById("penawaran-form").reset();
-      var tableBody = document.querySelector("#items-table tbody");
-      tableBody.innerHTML = `<tr>
+      function clearForm() {
+        document.getElementById("penawaran-form").reset();
+        var tableBody = document.querySelector("#items-table tbody");
+        tableBody.innerHTML = `<tr>
           <td>1</td>
-          <td><input type="text" name="item[]" placeholder="Nama barang"></td>
-          <td><input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)"></td>
-          <td><input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)"></td>
-          <td><input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)"></td>
-          <td><input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)"></td>
-          <td><input type="text" name="total_harga[]" placeholder="Total Harga" readonly></td>
-          <td><button type="button" class="remove" onclick="removeRow(this)">Hapus</button></td>
+          <td>
+            <input type="text" name="item[]" placeholder="Nama barang">
+          </td>
+          <td>
+            <input type="number" name="qty[]" placeholder="Kuantitas" oninput="calculateTotal(this)">
+          </td>
+          <td>
+            <input type="number" name="ukuran_p[]" placeholder="Panjang" oninput="calculateTotal(this)">
+          </td>
+          <td>
+            <input type="number" name="ukuran_l[]" placeholder="Lebar" oninput="calculateTotal(this)">
+          </td>
+          <td>
+            <input type="number" name="harga_satuan[]" placeholder="Harga Satuan" oninput="calculateTotal(this)">
+          </td>
+          <td>
+            <input type="text" name="total_harga[]" placeholder="Total Harga" readonly>
+          </td>
+          <td>
+            <button type="button" class="remove" onclick="removeRow(this)">Hapus</button>
+          </td>
         </tr>`;
 
-      document.getElementById("previewModal").style.display = "none";
-      document.getElementById("grand_total").value = "";
-    }
-
-    window.onclick = function (event) {
-      var modal = document.getElementById("previewModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
+        document.getElementById("previewModal").style.display = "none";
+        document.getElementById("grand_total").value = "";
       }
-    };
-  </script>
-</body>
 
+      window.onclick = function (event) {
+        var modal = document.getElementById("previewModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
 </html>
