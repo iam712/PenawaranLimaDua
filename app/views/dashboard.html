@@ -336,14 +336,13 @@
         </tbody>
         <tfoot>
           <tr>
-            <!-- Grand Total aligned to the rightmost part of the table -->
-            <td colspan="6" style="text-align: right">
+            <!-- Adjust colspan to make "Grand Total" aligned with "Total Harga" column -->
+            <td colspan="6" style="text-align: right;">
               <strong>Grand Total:</strong>
             </td>
-            <td style="text-align: right">
-              <input type="text" id="grand_total" readonly />
+            <td style="text-align: right;">
+              <input type="text" id="grand_total" readonly style="border: none; font-weight: bold;" />
             </td>
-            <td></td>
           </tr>
         </tfoot>
       </table>
@@ -511,57 +510,40 @@
 
       reader.onload = function (e) {
         var kopSuratHTML = kopSurat
-          ? '<img src="' +
-          e.target.result +
-          '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
+          ? '<img src="' + e.target.result + '" alt="Kop Surat" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />'
           : "";
 
         var tandaTanganReader = new FileReader();
         tandaTanganReader.onload = function (e) {
           var tandaTanganHTML = tandaTangan
-            ? '<img src="' +
-            e.target.result +
-            '" alt="Tanda Tangan" style="max-width: 150px; height: auto; display: block; margin-left: 0;" />'
+            ? '<img src="' + e.target.result + '" alt="Tanda Tangan" style="max-width: 150px; height: auto; display: block; margin-left: 0;" />'
             : "";
 
           previewContent =
             kopSuratHTML +
             "<hr>" +
-            "<p>Tanggal: " +
-            tanggalFaktur +
-            "</p><br>" +
-            "<p>Nomor Penawaran: " +
-            nomorPenawaran +
-            "</p>" +
-            "<p>Perihal: " +
-            perihal +
-            "</p><br>" +
+            "<p>Tanggal: " + tanggalFaktur + "</p><br>" +
+            "<p>Nomor Penawaran: " + nomorPenawaran + "</p>" +
+            "<p>Perihal: " + perihal + "</p><br>" +
             "<p>Kepada Yth,</p>" +
-            "<p>" +
-            namaPenerima +
-            "</p>" +
-            "<p>Purchasing " +
-            namaPerusahaan +
-            "</p>" +
+            "<p>" + namaPenerima + "</p>" +
+            "<p>Purchasing " + namaPerusahaan + "</p>" +
             "<p>Di Tempat</p><br>" +
             "<p>Dengan Hormat,</p>" +
-            "<p>Bersama surat ini kami mengajukan " +
-            perihal +
-            " dengan rincian sebagai berikut:</p>" +
+            "<p>Bersama surat ini kami mengajukan " + perihal + " dengan rincian sebagai berikut:</p>" +
             "<hr>" +
             generateItemsTable() +
             "<hr>" +
-            "<table style='width: 100%;'><tr><td colspan='2' style='text-align: right;'><strong>Grand Total:</strong></td><td colspan='2'>" +
-            grandTotal +
-            "</td></tr></table><br>" +
+            // Updated Grand Total alignment
+            "<table style='width: 100%;'><tr><td colspan='3' style='text-align: right;'><strong>Grand Total:</strong></td><td style='text-align: right;'>" +
+            grandTotal + "</td></tr></table><br>" +
             "<p>Keterangan: Penawaran harga berlaku untuk 2 minggu, setelah itu harga menyesuaikan kembali.</p><br>" +
             "<p>Demikian Surat Penawaran ini kami sampaikan, besar harapan kami untuk dapat kerjasama.</p>" +
             "<p>Atas perhatian dan kesempatan yang telah diberikan, kami ucapkan terima kasih.</p><br>" +
             "<p>Hormat Kami,</p><br>" +
             tandaTanganHTML;
 
-          document.getElementById("penawaran-preview-content").innerHTML =
-            previewContent;
+          document.getElementById("penawaran-preview-content").innerHTML = previewContent;
           document.getElementById("grand_total_preview").innerText = grandTotal;
         };
 
@@ -578,7 +560,6 @@
         reader.onload();
       }
     }
-
 
     function generateItemsTable() {
       var items = document.querySelectorAll("#items-table tbody tr");
