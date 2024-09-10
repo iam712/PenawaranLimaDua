@@ -1,70 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <!-- Bootstrap CSS for better styling -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f8f9fa;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #e9ecef;
+        font-family: "Poppins", sans-serif;
+      }
 
-        .signin-container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
+      .signin-container {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
 
-        .signin-container h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+      .signin-container:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
 
-        .signin-container .form-control {
-            margin-bottom: 1rem;
-        }
+      .signin-container h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        color: #343a40;
+      }
 
-        .signin-container button {
-            width: 100%;
-        }
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+      }
 
-        .signin-container .form-text {
-            text-align: center;
-            margin-top: 1rem;
-        }
+      .signin-container .form-control {
+        margin-bottom: 1.5rem;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease;
+      }
+
+      .signin-container .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      .signin-container button {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        transition: background-color 0.3s ease;
+      }
+
+      .signin-container button:hover {
+        background-color: #0056b3;
+      }
+
+      .signin-container .form-text {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #6c757d;
+      }
+
+      .signin-container a {
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .signin-container a:hover {
+        color: #0056b3;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="signin-container">
-        <h1>Sign In</h1>
-        <form action="/signin" method="POST">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <p class="form-text">Don't have an account? <a href="/signup">Sign up</a></p>
-        </form>
+      <h1>Sign In</h1>
+      <form action="/signin" method="POST">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p class="form-text">
+          Don't have an account? <a href="/signup">Sign up</a>
+        </p>
+      </form>
     </div>
 
     <!-- Bootstrap JS for interactivity -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
+  </body>
 </html>
