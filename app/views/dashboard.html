@@ -424,7 +424,7 @@
       </table>
     </div>
 
-    <button type="button" onclick="addRow()" >Tambah Barang</button><br />
+    <button type="button" onclick="addRow()">Tambah Barang</button><br />
 
     <label for="tanda-tangan">Upload TT Company:</label>
     <input type="file" id="tanda-tangan" accept="image/*" style="margin-top: 10px;" />
@@ -697,7 +697,23 @@
       return itemHTML;
     }
 
+    // function downloadPDF() {
+    //   var element = document.getElementById("penawaran-preview-content");
+    //   var opt = {
+    //     margin: [10, 10],
+    //     filename: "penawaran-barang.pdf",
+    //     image: { type: "jpeg", quality: 0.98 },
+    //     html2canvas: { scale: 2 },
+    //     jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    //   };
+    //   html2pdf().from(element).set(opt).save();
+    // }
+
     function downloadPDF() {
+      // Generate the preview content directly without opening the modal
+      previewPenawaran();
+
+      // After generating the content, we proceed with downloading the PDF
       var element = document.getElementById("penawaran-preview-content");
       var opt = {
         margin: [10, 10],
@@ -706,7 +722,11 @@
         html2canvas: { scale: 2 },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       };
-      html2pdf().from(element).set(opt).save();
+
+      // Wait for the preview content to be generated, then download
+      setTimeout(function () {
+        html2pdf().from(element).set(opt).save();
+      }, 500); // Delay to ensure the content is ready
     }
 
     function clearForm() {
