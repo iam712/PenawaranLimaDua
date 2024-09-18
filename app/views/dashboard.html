@@ -435,12 +435,11 @@
       <button type="button" class="clear" onclick="clearForm()">
         Hapus Isi Form
       </button>
+      <button type="submit" class="logout-btn" form="logout-form">Logout</button>
     </div>
   </form>
 
-  <form action="/logout" method="POST">
-    <button type="submit" class="logout-btn">Logout</button>
-  </form>
+  <form id="logout-form" action="/logout" method="POST" style="display: none;"></form>
 
   <!-- Modal untuk Preview -->
   <div id="previewModal" class="modal">
