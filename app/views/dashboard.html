@@ -746,7 +746,7 @@
       }
 
       // Generate Preview Content and Handle Photos
-      // Function to process and add photos with correct pagination
+      // Function to process and add photos with correct pagination and rotation
       function previewPenawaran(callback) {
         var tanggalFaktur = document.getElementById("tanggal-faktur").value;
         var nomorPenawaran = document.getElementById("nomor-penawaran").value;
@@ -841,7 +841,7 @@
               "<p>Hormat Kami,</p><br>" +
               tandaTanganHTML;
 
-            // Process photos, each photo starts on a new page
+            // Process photos, each photo starts on a new page and is rotated if needed
             var imagesHTML = "";
 
             photoDataUrls.forEach(function (dataUrl, index) {
@@ -850,7 +850,7 @@
                   '<div style="page-break-before: always;">' +
                   '<img src="' +
                   dataUrl +
-                  '" style="width: 100%; height: auto; max-height: 100vh;" />' +
+                  '" style="width: 100%; height: 100vh; max-height: 100vh; transform: rotate(90deg);" />' +
                   "</div>";
               }
             });
