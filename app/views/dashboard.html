@@ -342,6 +342,11 @@
         max-height: 100%;
         object-fit: contain; /* Memastikan gambar tetap proporsional */
       }
+
+      /* Tambahkan page break pada foto pertama */
+      .page-break {
+        page-break-before: always;
+      }
     </style>
   </head>
 
@@ -394,15 +399,6 @@
         type="text"
         id="nama-perusahaan"
         name="nama-perusahaan"
-        style="margin-top: 10px"
-      />
-      <br />
-
-      <label for="tanggal-jatuh-tempo">Tanggal Jatuh Tempo:</label>
-      <input
-        type="date"
-        id="tanggal-jatuh-tempo"
-        name="tanggal-jatuh-tempo"
         style="margin-top: 10px"
       />
       <br />
@@ -860,10 +856,10 @@
 
             photoDataUrls.forEach(function (dataUrl, index) {
               if (dataUrl) {
-                imagesHTML += `
-                <div style="page-break-before: always;" class="center-photo">
-                  <img src="${dataUrl}" style="transform: rotate(90deg);" />
-                </div>`;
+                imagesHTML +=
+                  '<div class="page-break center-photo"><img src="' +
+                  dataUrl +
+                  '" style="transform: rotate(90deg);" /></div>';
               }
             });
 
