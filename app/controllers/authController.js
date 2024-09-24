@@ -12,7 +12,10 @@ function login(req, res) {
         req.session.user = user;
         res.redirect('/dashboard');
     } else {
-        res.send('Invalid username or password');
+        // res.render('signin', { error: 'Invalid username or password'});
+        // Store error message in the session
+        req.session.error = 'Invalid username or password';
+        res.redirect('/signin'); // Redirect back to the sign-in page
     }
 }
 

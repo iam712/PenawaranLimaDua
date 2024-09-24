@@ -54,6 +54,13 @@ app.get('/dashboard', (req, res) => {
     }
 });
 
+app.get('/getErrorMessage', (req, res) => {
+    const errorMessage = req.session.error || '';
+    req.session.error = null;  // Clear the error after sending it
+    res.json({ error: errorMessage });
+});
+
+
 // Logout functionality
 app.post('/logout', (req, res) => {
     // Destroy the session and redirect to signin page
