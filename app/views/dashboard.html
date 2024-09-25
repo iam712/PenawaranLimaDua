@@ -470,7 +470,7 @@
     function adjustFontSize() {
       const rows = document.querySelectorAll("#items-table tbody tr").length;
       const baseFontSize = 10; // base font size in px
-      const minFontSize = 6; // minimum font size to prevent text from becoming unreadable
+      const minFontSize = 7; // minimum font size to prevent text from becoming unreadable
 
       // Calculate new font size based on the number of rows
       let newFontSize = baseFontSize - Math.floor((rows - 1) / 2);
