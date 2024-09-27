@@ -543,9 +543,16 @@
         let newFontSize = baseFontSize - Math.floor((rows - 1) / 2);
         if (newFontSize < minFontSize) newFontSize = minFontSize;
 
-        // Apply the new font size to the table and form
-        document.querySelector("table").style.fontSize = newFontSize + "px";
+        // Apply the new font size to the body (for text outside the table)
         document.querySelector("body").style.fontSize = newFontSize + "px";
+
+        // Apply the new font size to all table cells
+        const tableCells = document.querySelectorAll(
+          "#items-table td, #items-table th"
+        );
+        tableCells.forEach((cell) => {
+          cell.style.fontSize = newFontSize + "px";
+        });
       }
 
       // Add Row Function
